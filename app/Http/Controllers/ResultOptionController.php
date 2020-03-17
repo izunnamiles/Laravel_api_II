@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Discussion;
+use App\Http\Resources\ResultOptionResource;
 use App\ResultOption;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,10 @@ class ResultOptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Discussion $discussion)
     {
         //
+        return ResultOptionResource::collection($discussion->result_option);
     }
 
     /**
@@ -33,9 +36,18 @@ class ResultOptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Discussion $discussion, ResultOption $resultOption)
     {
         //
+        {
+        $resultOption = new ResultOption($request->all());
+
+        $discussion->result_option()->save($resultOption);
+            return response([
+                'data' => new ResultOptionResource($resultOption)
+            ],Response::HTTP_CREATED);
+        }
+
     }
 
     /**
@@ -47,6 +59,7 @@ class ResultOptionController extends Controller
     public function show(ResultOption $resultOption)
     {
         //
+        return new ResultOption($resultOption);
     }
 
     /**
@@ -70,6 +83,7 @@ class ResultOptionController extends Controller
     public function update(Request $request, ResultOption $resultOption)
     {
         //
+        $resultOption->update($request->all());
     }
 
     /**
@@ -78,8 +92,11 @@ class ResultOptionController extends Controller
      * @param  \App\ResultOption  $resultOption
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ResultOption $resultOption)
+    public function destroy(ResultOption $resultOption, Discussion $discussion)
     {
         //
+        $resultOption->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
+
     }
 }

@@ -60,6 +60,7 @@ class TransactionController extends Controller
     public function show(Transaction $transaction)
     {
         //
+        return new Transaction($transaction);
     }
 
     /**
@@ -83,6 +84,7 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         //
+        $transaction->update($request->all());
     }
 
     /**
@@ -91,8 +93,10 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction, User $user)
     {
         //
+        $transaction->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }

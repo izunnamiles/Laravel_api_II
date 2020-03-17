@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReportResource;
 use App\Report;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,9 +14,10 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
         //
+        return ReportResource::collection($user->report);
     }
 
     /**
@@ -33,9 +36,17 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user, Report $report)
     {
         //
+        {
+            $report = new Report($request->all());
+            $user->report()->save($report);
+
+            return response([
+                'data' => new ReportResource($report)
+            ],Response::HTTP_CREATED);
+        }
     }
 
     /**
@@ -47,6 +58,7 @@ class ReportController extends Controller
     public function show(Report $report)
     {
         //
+        return new Report($report);
     }
 
     /**
@@ -78,8 +90,10 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Report $report)
+    public function destroy(Report $report, User $user)
     {
         //
+        $report->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }

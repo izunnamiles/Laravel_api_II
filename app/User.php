@@ -53,4 +53,14 @@ class User extends Authenticatable
     public function transaction(){
         return $this->hasMany(Transaction::class);
     }
+
+    public function report(){
+        return $this->hasMany(Report::class);
+    }
+    public function result_option(){
+        return $this->hasMany(ResultOption::class);
+    }
+    public function contact(){
+        return $this->hasMany(Contact::class);
+    }
 }

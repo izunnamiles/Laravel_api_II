@@ -21,4 +21,7 @@ class Discussion extends Model
     public function discussion_group(){
         return $this->hasMany(Discussion_Group::class);
     }
+    public function result_option(){
+        return $this->hasMany(ResultOption::class);
+    }
 }

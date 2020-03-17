@@ -28,9 +28,13 @@ Route::group(['prefix' => 'discussion'],function(){
 });
 Route::group(['prefix'=>'discussion'],function (){
     Route::apiResource('/{discussion}/discussion_group','DiscussionGroupController');
+    Route::apiResource('/{discussion}/answer','ResultOptionController');
+
 });
 
 Route::group(['prefix'=>'user'], function(){
     Route::apiResource('{user}/wallet','WalletController');
     Route::apiResource('{user}/transaction','TransactionController');
+    Route::apiResource('{user}/report','ReportController');
+    Route::apiResource('{user}/contacts','ContactController');
 });
