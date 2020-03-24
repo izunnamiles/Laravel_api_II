@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Discussion;
+use App\Http\Requests\DiscussionRequest;
 use App\Http\Resources\DiscussionResource;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class DiscussionController extends Controller
         return DiscussionResource::collection(Discussion::paginate(5));
     }
 
-    public function store(Request $request)
+    public function store(DiscussionRequest $request)
     {
         //
         $discussion = Discussion::create($request->all());

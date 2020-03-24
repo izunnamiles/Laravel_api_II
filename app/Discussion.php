@@ -13,6 +13,9 @@ class Discussion extends Model
     protected $fillable=[
         'user_id','topic','details','option_a','option_b','option_c','option_d','status','winner_id','amount','referee'
     ];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function comments()
     {

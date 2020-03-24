@@ -37,4 +37,5 @@ Route::group(['prefix'=>'user'], function(){
     Route::apiResource('{user}/transaction','TransactionController');
     Route::apiResource('{user}/report','ReportController');
     Route::apiResource('{user}/contacts','ContactController');
+    Route::apiResource('{user}/invite','InviteFriendController');
 });

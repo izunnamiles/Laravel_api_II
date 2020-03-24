@@ -33,12 +33,19 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request, User $user, Report $report)
     {
         //
+        $this->validate($request, [
+            'reference_code'=>'required',
+            'issues'=>'required',
+            'status'=>'required',
+            'date_resolved'=>'required'
+             ]);
         {
             $report = new Report($request->all());
             $user->report()->save($report);
