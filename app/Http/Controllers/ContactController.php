@@ -6,6 +6,7 @@ use App\Contact;
 use App\Http\Resources\ContactResource;
 use App\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
@@ -18,6 +19,7 @@ class ContactController extends Controller
     {
         //
         return ContactResource::collection($user->contact);
+
     }
         /**
          * Show the form for creating a new resource.
@@ -29,25 +31,26 @@ class ContactController extends Controller
             //
     }
 
-        /**
-         * Store a newly created resource in storage.
-         *
-         * @param  \Illuminate\Http\Request $request
-         * @return \Illuminate\Http\Response
-         */
-        public
-        function store(Request $request, User $user, Contact $contact)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request, User $user, Contact $contact)
         {
             //
-            {
-                $contact = new Contact($request->all());
+            $this->validate($request,[
+                'friend_id'=>'required|unique:contacts'
+            ]);
+            $contact = new Contact($request->all());
 
-                $user->contact()->save($contact);
+            $user->contact()->save($contact);
 
-                return response([
-                    'data' => new ContactResource($contact)
-                ], Response::HTTP_CREATED);
-            }
+            return response([
+                'data' => new ContactResource($contact)
+            ], Response::HTTP_CREATED);
         }
 
         /**

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Discussion;
 use App\Http\Requests\DiscussionRequest;
 use App\Http\Resources\DiscussionResource;
+use App\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DiscussionController extends Controller
 {
@@ -22,7 +24,7 @@ class DiscussionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index','show');
+        $this->middleware('auth:api')->except('index','show','store');
     }
 
     /**
@@ -34,16 +36,17 @@ class DiscussionController extends Controller
 
      */
 
-    public function index()
+    public function index(User $user)
     {
 
-        return DiscussionResource::collection(Discussion::paginate(5));
+        return DiscussionResource::collection($user->discussion);
     }
 
-    public function store(DiscussionRequest $request)
+    public function store(DiscussionRequest $request, User $user, Discussion $discussion)
     {
         //
-        $discussion = Discussion::create($request->all());
+        $discussion = new Discussion($request->all());
+        $user->discussion()->save($discussion);
 
         return response([
 

@@ -39,7 +39,7 @@ class User extends Authenticatable
     ];
 
     public function discussion(){
-        return $this->hasOne(Discussion::class);
+        return $this->hasMany(Discussion::class);
     }
 
     public function discussion_group(){

@@ -25,14 +25,14 @@ class DiscussionRequest extends FormRequest
     {
         return [
             //
-            'topic'=>'required|max 100',
+            'topic'=>'required',
             'details'=>'required',
-            'option_a' => 'required|max:255|unique:products',
+            'option_a' => 'required',
             'option_b' => 'required',
-            'option_c' => 'required|max:10',
-            'option_d' => 'required|max:6',
-            'status' => 'required|max:2',
-            'amount' => 'required|max:10'
+            'option_c' => 'required',
+            'option_d' => 'required',
+            'status' => 'required',
+            'amount' => 'required'
         ];
     }
 }

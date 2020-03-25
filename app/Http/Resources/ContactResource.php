@@ -16,8 +16,7 @@ class ContactResource extends JsonResource
     {
         return [
             'user_id' => $this->user_id,
-            'discussion_id' => $this->discussion_id,
-            'friend_id' => $this->friend_id,
+            'friend_id' => $this->friend_id
 
         ];
     }

@@ -21,18 +21,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'API\RegisterController@register');
 Route::post('login', 'API\RegisterController@login');
 
-Route::apiResource('/discussions','DiscussionController');
 Route::group(['prefix' => 'discussion'],function(){
-
     Route::apiResource('/{discussion}/comments','CommentController');
-});
-Route::group(['prefix'=>'discussion'],function (){
     Route::apiResource('/{discussion}/discussion_group','DiscussionGroupController');
     Route::apiResource('/{discussion}/answer','ResultOptionController');
 
 });
 
+
 Route::group(['prefix'=>'user'], function(){
+    Route::apiResource('{user}/discussion','DiscussionController');
     Route::apiResource('{user}/wallet','WalletController');
     Route::apiResource('{user}/transaction','TransactionController');
     Route::apiResource('{user}/report','ReportController');
