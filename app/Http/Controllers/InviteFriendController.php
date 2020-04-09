@@ -86,7 +86,7 @@ class InviteFriendController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Report $report)
+    public function update(Request $request, InviteFriend $inviteFriend)
     {
         //
 
@@ -98,10 +98,10 @@ class InviteFriendController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Report $report, User $user)
+    public function destroy(InviteFriend $inviteFriend, User $user)
     {
         //
-        $report->delete();
+        $inviteFriend->delete();
 
         return response(null,Response::HTTP_NO_CONTENT);
     }
