@@ -19,7 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('register', 'API\RegisterController@register');
+Route::get('login', 'API\RegisterController@login')->name('login');
 Route::post('login', 'API\RegisterController@login');
+Route::middleware('auth:api')->get('/logout','API\RegisterController@logout');
+
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
 
 Route::group(['prefix' => 'discussion'],function(){
     Route::apiResource('/{discussion}/comments','CommentController');
